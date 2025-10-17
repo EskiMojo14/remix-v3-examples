@@ -1,6 +1,6 @@
 import { createRoot } from "@remix-run/dom";
 
-import { ReduxExample } from "./state-libs/redux";
+import { ReduxProvider, store, ReduxExample } from "./state-libs/redux";
 import { ZustandExample } from "./state-libs/zustand";
 import { RxJSExample } from "./state-libs/rxjs";
 import { XStateExample } from "./state-libs/xstate";
@@ -36,7 +36,12 @@ createRoot(document.getElementById("root")!).render(
       <ExampleSelector
         render={(selected) => {
           if (selected === "event-target") return <EventTargetExample />;
-          if (selected === "redux") return <ReduxExample />;
+          if (selected === "redux")
+            return (
+              <ReduxProvider store={store}>
+                <ReduxExample />
+              </ReduxProvider>
+            );
           if (selected === "zustand") return <ZustandExample />;
           if (selected === "rxjs") return <RxJSExample />;
           if (selected === "xstate") return <XStateExample />;
@@ -53,5 +58,5 @@ createRoot(document.getElementById("root")!).render(
         }}
       />
     </div>
-  </div>,
+  </div>
 );
